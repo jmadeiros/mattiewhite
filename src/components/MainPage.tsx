@@ -123,6 +123,13 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
     [0, 0.75, 1.0], 
     ["0vh", "0vh", "-100vh"]
   )
+  
+  // Arrow fades in when images meet logo, fades out before scroll
+  const arrowOpacity = useTransform(
+    scrollYProgress,
+    [0.30, 0.40, 0.65, 0.75],
+    [0, 1, 1, 0]
+  )
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showFullPortfolio, setShowFullPortfolio] = useState(false)
@@ -206,6 +213,30 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 {currentImageIndex % 4 === 3 && "Soul"}
               </p>
             </div>
+          </motion.div>
+
+          {/* Scroll Arrow - appears when MW and images meet */}
+          <motion.div
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+            style={{ opacity: arrowOpacity }}
+          >
+            <motion.div
+              animate={{ y: [0, 8, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="flex flex-col items-center gap-2"
+            >
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="1" 
+                className="text-stone-400"
+              >
+                <path d="M12 5v14M19 12l-7 7-7-7" />
+              </svg>
+            </motion.div>
           </motion.div>
         </section>
       )}
@@ -496,15 +527,15 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
         <AnimatePresence>
           {!showFullPortfolio && (
             <>
-                    <motion.div
-                      key="carousel"
-                      initial={{ opacity: 1 }}
-                      exit={{ opacity: 0, y: -50 }}
-                      transition={{ duration: 0.5 }}
+              <motion.div
+                key="carousel"
+                initial={{ opacity: 1 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.5 }}
                       className="relative z-50 bg-white"
-                    >
-                      <HorizontalScrollCarousel media={horizontalScrollMedia} />
-                    </motion.div>
+              >
+                <HorizontalScrollCarousel media={horizontalScrollMedia} />
+              </motion.div>
               
               <motion.section
                 key="about"
