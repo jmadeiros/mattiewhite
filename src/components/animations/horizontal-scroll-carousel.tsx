@@ -52,7 +52,7 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
     target: targetRef,
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-92%"])
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-87%"])
 
   return (
     <section ref={targetRef} className="relative h-[400vh] bg-white">
