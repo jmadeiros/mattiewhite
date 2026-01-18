@@ -92,8 +92,8 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
             </div>
           ))}
 
-          {/* Explore All Button at the end */}
-          <div className="w-[300px] md:w-[400px] shrink-0 flex flex-col justify-center items-center h-[450px] md:h-[600px]">
+          {/* Explore All - just sticks out at the very end, doesn't affect scroll */}
+          <div className="shrink-0 flex items-center justify-center pl-8">
             <Button
               variant="outline"
               onClick={onExploreClick}
