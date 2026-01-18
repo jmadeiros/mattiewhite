@@ -20,11 +20,11 @@ export const portfolioImages: PortfolioItem[] = [
   },
   {
     id: 2,
-    src: "/images/portfolio/editorial-outdoor.jpg",
-    alt: "Editorial outdoor beauty shot",
-    title: "Natural Light",
-    category: "Editorial",
-    description: "Capturing beauty in natural light with soft, radiant skin and effortless elegance.",
+    src: "/images/portfolio/lovewant-georgia.jpg",
+    alt: "Soft glam beauty look",
+    title: "Soft Glam",
+    category: "Beauty",
+    description: "A luminous beauty look featuring soft, radiant skin and effortless elegance.",
     type: "image",
   },
   {
