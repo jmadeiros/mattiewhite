@@ -3,7 +3,6 @@
 import { useRef, useState, useEffect } from "react"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import Image from "next/image"
-import { Button } from "@/components/ui/button"
 
 type MediaProps = {
   src: string
@@ -15,7 +14,6 @@ type MediaProps = {
 
 type HorizontalScrollCarouselProps = {
   media: MediaProps[]
-  onExploreClick?: () => void
 }
 
 function VideoItem({ src, alt }: { src: string; alt: string }) {
@@ -46,7 +44,7 @@ function VideoItem({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalScrollCarouselProps) {
+export function HorizontalScrollCarousel({ media }: HorizontalScrollCarouselProps) {
   const targetRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -91,20 +89,6 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
               </div>
             </div>
           ))}
-
-          {/* Explore All - just sticks out at the very end, doesn't affect scroll */}
-          <div className="shrink-0 flex items-center justify-center pl-8">
-            <Button
-              variant="outline"
-              onClick={onExploreClick}
-              className="group relative border border-black text-black hover:text-white transition-all duration-700 px-12 py-5 text-xs uppercase tracking-[0.25em] bg-transparent overflow-hidden hover:scale-105 hover:shadow-xl hover:shadow-black/10 rounded-none"
-            >
-              <span className="relative z-10 flex items-center transition-transform duration-300">
-                Explore All
-              </span>
-              <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-            </Button>
-          </div>
         </motion.div>
       </div>
     </section>

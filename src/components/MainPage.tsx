@@ -503,10 +503,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                       transition={{ duration: 0.5 }}
                       className="relative z-50 bg-white"
                     >
-                      <HorizontalScrollCarousel 
-                        media={horizontalScrollMedia} 
-                        onExploreClick={() => setShowFullPortfolio(true)}
-                      />
+                      <HorizontalScrollCarousel media={horizontalScrollMedia} />
                     </motion.div>
               
               <motion.section
