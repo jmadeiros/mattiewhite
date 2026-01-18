@@ -92,8 +92,8 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
             </div>
           ))}
 
-          {/* Explore More Card at the end */}
-          <div className="w-[300px] md:w-[400px] shrink-0 flex flex-col justify-center items-center h-[450px] md:h-[600px] bg-stone-50 border border-stone-100">
+          {/* Explore All Button at the end */}
+          <div className="w-[300px] md:w-[400px] shrink-0 flex flex-col justify-center items-center h-[450px] md:h-[600px]">
             <Button
               variant="outline"
               onClick={onExploreClick}
