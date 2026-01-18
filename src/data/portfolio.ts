@@ -20,11 +20,11 @@ export const portfolioImages: PortfolioItem[] = [
   },
   {
     id: 2,
-    src: "/images/portfolio/lovewant-georgia.jpg",
-    alt: "Soft glam beauty look",
-    title: "Soft Glam",
-    category: "Beauty",
-    description: "A luminous beauty look featuring soft, radiant skin and effortless elegance.",
+    src: "/images/portfolio/chromatic-study.jpg",
+    alt: "Model with chromatic and glossy makeup",
+    title: "Chromatic Study",
+    category: "Avant-Garde",
+    description: "An experimental look exploring the interplay of light, color, and texture on the skin.",
     type: "image",
   },
   {
