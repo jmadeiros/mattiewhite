@@ -52,7 +52,7 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
     target: targetRef,
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-95%"])
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-92%"])
 
   return (
     <section ref={targetRef} className="relative h-[400vh] bg-white">
@@ -96,13 +96,7 @@ export function HorizontalScrollCarousel({ media, onExploreClick }: HorizontalSc
           <div className="w-[300px] md:w-[400px] shrink-0 flex flex-col justify-center items-center h-[450px] md:h-[600px] bg-stone-50 border border-stone-100">
             <Button
               variant="outline"
-              onClick={() => {
-                onExploreClick?.()
-                // Scroll to top of portfolio section
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
-                }, 100)
-              }}
+              onClick={onExploreClick}
               className="group relative border border-black text-black hover:text-white transition-all duration-700 px-12 py-5 text-xs uppercase tracking-[0.25em] bg-transparent overflow-hidden hover:scale-105 hover:shadow-xl hover:shadow-black/10 rounded-none"
             >
               <span className="relative z-10 flex items-center transition-transform duration-300">
