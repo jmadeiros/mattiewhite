@@ -107,20 +107,20 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
   })
 
   // Images scroll up from below to center, hold, then scroll up and out
-  // 0-0.20: Images scroll up from below to center
-  // 0.20-0.60: Hold in center
-  // 0.60-1.0: Both logo and images scroll up and out of view
+  // 0-0.35: Images scroll up slowly from below to center
+  // 0.35-0.65: Hold in center
+  // 0.65-1.0: Both logo and images scroll up and out of view
   const imagesY = useTransform(
     scrollYProgress, 
-    [0, 0.20, 0.60, 1.0], 
+    [0, 0.35, 0.65, 1.0], 
     ["100vh", "0vh", "0vh", "-100vh"]
   )
-  const imagesOpacity = useTransform(scrollYProgress, [0, 0.12], [0, 1])
+  const imagesOpacity = useTransform(scrollYProgress, [0, 0.20], [0, 1])
   
   // Logo scrolls up and out with images after hold period
   const logoY = useTransform(
     scrollYProgress, 
-    [0, 0.60, 1.0], 
+    [0, 0.65, 1.0], 
     ["0vh", "0vh", "-100vh"]
   )
 
