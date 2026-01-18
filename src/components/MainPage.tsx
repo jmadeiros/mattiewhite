@@ -310,7 +310,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   </div>
                   <div className="md:col-span-7 md:order-1 group cursor-pointer">
                     <ScrollReveal>
-                      <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
+                      <div className="aspect-[16/9] overflow-hidden bg-stone-50 relative">
                         {portfolioImages[1].type === "video" ? (
                           <video
                             src={portfolioImages[1].src}
