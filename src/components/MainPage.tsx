@@ -496,15 +496,18 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
         <AnimatePresence>
           {!showFullPortfolio && (
             <>
-              <motion.div
-                key="carousel"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.5 }}
-              className="relative z-50 bg-white"
-              >
-                <HorizontalScrollCarousel media={horizontalScrollMedia} />
-              </motion.div>
+                    <motion.div
+                      key="carousel"
+                      initial={{ opacity: 1 }}
+                      exit={{ opacity: 0, y: -50 }}
+                      transition={{ duration: 0.5 }}
+                      className="relative z-50 bg-white"
+                    >
+                      <HorizontalScrollCarousel 
+                        media={horizontalScrollMedia} 
+                        onExploreClick={() => setShowFullPortfolio(true)}
+                      />
+                    </motion.div>
               
               <motion.section
                 key="about"
