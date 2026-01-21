@@ -27,7 +27,7 @@ export function Footer() {
               href="mailto:mattie.white@icloud.com"
               className="group relative border border-stone-400 text-stone-600 hover:text-white hover:border-black transition-all duration-500 px-8 py-3 text-[10px] uppercase tracking-[0.2em] bg-transparent overflow-hidden rounded-full"
             >
-              <span className="relative z-10">Email</span>
+              <span className="relative z-10">Get in Touch</span>
               <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full" />
             </a>
 

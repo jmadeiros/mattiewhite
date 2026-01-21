@@ -8,7 +8,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { HorizontalScrollCarousel } from "@/components/animations/horizontal-scroll-carousel"
-import { portfolioImages, categories } from "@/data/portfolio"
+import { portfolioImages } from "@/data/portfolio"
 
 const HERO_IMAGES = [
   "/images/portfolio/cover-vogue.jpg",
@@ -22,73 +22,73 @@ const HERO_IMAGES = [
 
 const horizontalScrollMedia = [
   {
-    src: "/images/showreel/Beauty---Jack-Grange-.jpg",
-    alt: "Beauty – Jack Grange",
-    title: "Jack Grange",
-    category: "Beauty",
-    type: "image" as "image" | "video",
-  },
-  {
-    src: "/images/showreel/Beauty-Adjacent---Benjamin-Vnuk-.jpg",
-    alt: "Beauty Adjacent – Benjamin Vnuk",
-    title: "Benjamin Vnuk",
+    src: "/images/carousel2/Beauty Adjacent : Benjamin Vnuk .jpg",
+    alt: "Beauty Adjacent",
+    title: "Beauty Adjacent",
     category: "Beauty Adjacent",
     type: "image" as "image" | "video",
   },
   {
-    src: "/images/showreel/BOSS.mp4",
-    alt: "BOSS Campaign",
-    title: "BOSS Campaign",
-    category: "Commercial",
-    type: "video" as "image" | "video",
-  },
-  {
-    src: "/images/showreel/Cos-.jpg",
-    alt: "COS Editorial",
-    title: "COS",
-    category: "Editorial",
-    type: "image" as "image" | "video",
-  },
-  {
-    src: "/images/showreel/Net-A-Porter-.jpg",
+    src: "/images/carousel2/Net A Porter .jpg",
     alt: "Net A Porter",
     title: "Net A Porter",
     category: "Commercial",
     type: "image" as "image" | "video",
   },
   {
-    src: "/images/showreel/Olivia-Petronella-Palermo_LOVEWANT35-copy.jpg",
-    alt: "Olivia Palermo – LOVEWANT",
-    title: "Olivia Palermo",
-    category: "Celebrity",
+    src: "/images/carousel2/IMG_9310 copy.jpg",
+    alt: "Selfridges",
+    title: "Selfridges",
+    category: "Campaign",
     type: "image" as "image" | "video",
   },
   {
-    src: "/images/showreel/Selfridges-.mp4",
-    alt: "Selfridges Campaign",
+    src: "/images/carousel2/Beauty : Jack Grange .jpg",
+    alt: "Beauty",
+    title: "Beauty",
+    category: "Beauty",
+    type: "image" as "image" | "video",
+  },
+  {
+    src: "/images/carousel2/BOSS.mp4",
+    alt: "BOSS",
+    title: "BOSS",
+    category: "Commercial",
+    type: "video" as "image" | "video",
+  },
+  {
+    src: "/images/carousel2/Wallpaper Magazine .jpg",
+    alt: "WallPaper Magazine",
+    title: "WallPaper Magazine",
+    category: "Editorial",
+    type: "image" as "image" | "video",
+  },
+  {
+    src: "/images/carousel2/Selfridges .mp4",
+    alt: "Selfridges",
     title: "Selfridges",
     category: "Campaign",
     type: "video" as "image" | "video",
   },
   {
-    src: "/images/showreel/Studio-Nicholson-.jpg",
-    alt: "Studio Nicholson",
-    title: "Studio Nicholson",
+    src: "/images/carousel2/Olivia Petronella Palermo_LOVEWANT35 copy.jpg",
+    alt: "Love Want",
+    title: "Love Want",
     category: "Editorial",
     type: "image" as "image" | "video",
   },
   {
-    src: "/images/showreel/Stusio-Nicholson.mp4",
-    alt: "Studio Nicholson Video",
-    title: "Studio Nicholson",
-    category: "Motion",
-    type: "video" as "image" | "video",
+    src: "/images/portfolio/cos-editorial.jpg",
+    alt: "COS",
+    title: "COS",
+    category: "Editorial",
+    type: "image" as "image" | "video",
   },
   {
-    src: "/images/showreel/Wallpaper-Magazine-.jpg",
-    alt: "Wallpaper Magazine",
-    title: "Wallpaper Magazine",
-    category: "Editorial",
+    src: "/images/carousel2/0003303800_2_3_1.jpg",
+    alt: "Zara",
+    title: "Zara",
+    category: "Commercial",
     type: "image" as "image" | "video",
   },
 ]
@@ -108,11 +108,11 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
 
   // Images scroll up from below to center, hold, then scroll up and out
   // 0-0.35: Images scroll up SLOWLY from below to center
-  // 0.35-0.75: Hold in center (same 40% hold duration as before)
-  // 0.75-1.0: Both logo and images scroll up and out of view
+  // 0.35-0.55: Hold in center (reduced hold duration)
+  // 0.55-1.0: Both logo and images scroll up and out of view
   const imagesY = useTransform(
     scrollYProgress, 
-    [0, 0.35, 0.75, 1.0], 
+    [0, 0.35, 0.55, 1.0], 
     ["100vh", "0vh", "0vh", "-100vh"]
   )
   const imagesOpacity = useTransform(scrollYProgress, [0, 0.20], [0, 1])
@@ -120,20 +120,15 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
   // Logo scrolls up and out with images after hold period
   const logoY = useTransform(
     scrollYProgress, 
-    [0, 0.75, 1.0], 
+    [0, 0.55, 1.0], 
     ["0vh", "0vh", "-100vh"]
   )
   
-  // Arrow fades in when images meet logo, fades out before scroll
-  const arrowOpacity = useTransform(
-    scrollYProgress,
-    [0.30, 0.40, 0.65, 0.75],
-    [0, 1, 1, 0]
-  )
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [showFullPortfolio, setShowFullPortfolio] = useState(false)
-  const [selectedCategory, setSelectedCategory] = useState("All")
+  const [showInitialArrow, setShowInitialArrow] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
 
   // Fast image cycling (180ms)
   useEffect(() => {
@@ -141,6 +136,28 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
       setCurrentImageIndex((prev) => (prev + 1) % HERO_IMAGES.length)
     }, 180)
     return () => clearInterval(interval)
+  }, [])
+
+  // Show initial arrow after delay (4 seconds)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!hasScrolled) {
+        setShowInitialArrow(true)
+      }
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [hasScrolled])
+
+  // Hide initial arrow when scrolling starts
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setHasScrolled(true)
+        setShowInitialArrow(false)
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -182,6 +199,37 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
             </div>
           </motion.div>
 
+          {/* Initial Arrow - appears below MW logo after delay, disappears on scroll */}
+          <AnimatePresence>
+            {showInitialArrow && !hasScrolled && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
+              >
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                  className="flex flex-col items-center gap-2"
+                >
+                  <svg 
+                    width="24" 
+                    height="24" 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="1" 
+                    className="text-stone-400"
+                  >
+                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                  </svg>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Cycling Images - Scroll up from below, hold, then scroll out */}
           <motion.div 
             className="fixed top-1/2 left-1/2 z-30 w-[75vw] md:w-[28vw] aspect-[3/4] shadow-2xl overflow-hidden bg-stone-200 will-change-transform"
@@ -215,29 +263,6 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
             </div>
           </motion.div>
 
-          {/* Scroll Arrow - appears when MW and images meet */}
-          <motion.div
-            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 pointer-events-none"
-            style={{ opacity: arrowOpacity }}
-          >
-            <motion.div
-              animate={{ y: [0, 8, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="flex flex-col items-center gap-2"
-            >
-              <svg 
-                width="24" 
-                height="24" 
-                viewBox="0 0 24 24" 
-                fill="none" 
-                stroke="currentColor" 
-                strokeWidth="1" 
-                className="text-stone-400"
-              >
-                <path d="M12 5v14M19 12l-7 7-7-7" />
-              </svg>
-            </motion.div>
-          </motion.div>
         </section>
       )}
       
@@ -246,34 +271,34 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
           <div className="container mx-auto px-8 md:px-16 lg:px-24">
           {/* Portfolio Title - With scroll fade animation */}
           <ScrollReveal>
-            <div className="text-center mb-24 md:mb-32">
-              <h2 className="text-5xl md:text-7xl lg:text-8xl font-thin text-black tracking-[0.4em] uppercase">
-                Portfolio
-              </h2>
-              <div className="w-32 h-[1px] bg-black mx-auto my-12" />
+            <div className="text-center mb-32 md:mb-48">
               <AnimatePresence mode="wait">
                 {!showFullPortfolio ? (
-                  <motion.p
+                  <motion.div
                     key="selected"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-lg text-stone-600 font-light max-w-2xl mx-auto leading-relaxed tracking-[0.15em] uppercase"
                   >
-                    Selected Works
-                  </motion.p>
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-stone-600 max-w-2xl mx-auto leading-relaxed tracking-[0.15em] uppercase">
+                      Selected Works
+                    </h2>
+                    <div className="w-32 h-[1px] bg-black mx-auto my-12" />
+                  </motion.div>
                 ) : (
-                  <motion.p
-                    key="collection"
+                  <motion.div
+                    key="portfolio"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="text-lg text-stone-600 font-light max-w-2xl mx-auto leading-relaxed tracking-[0.15em] uppercase"
                   >
-                    A curated collection of editorial, beauty, and avant-garde makeup artistry
-                  </motion.p>
+                    <h2 className="text-xl md:text-2xl lg:text-3xl font-light text-stone-600 max-w-2xl mx-auto leading-relaxed tracking-[0.15em] uppercase">
+                      Portfolio
+                    </h2>
+                    <div className="w-32 h-[1px] bg-black mx-auto my-12" />
+                  </motion.div>
                 )}
               </AnimatePresence>
             </div>
@@ -350,7 +375,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                             loop
                             muted
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover scale-[1.15] transition-transform duration-500 ease-in-out group-hover:scale-[1.2]"
                           />
                         ) : (
                           <Image
@@ -364,15 +389,15 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                     </ScrollReveal>
                   </div>
                 </div>
-                {/* Portfolio Item 3 (New Video) */}
+                {/* Portfolio Item 3 */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
                     <ScrollReveal>
                       <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
-                        {portfolioImages[2].type === "video" ? (
+                        {portfolioImages[3].type === "video" ? (
                           <video
-                            src={portfolioImages[2].src}
-                            title={portfolioImages[2].alt}
+                            src={portfolioImages[3].src}
+                            title={portfolioImages[3].alt}
                             autoPlay
                             loop
                             muted
@@ -381,8 +406,8 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                           />
                         ) : (
                           <Image
-                            src={portfolioImages[2].src || "/placeholder.svg"}
-                            alt={portfolioImages[2].alt}
+                            src={portfolioImages[3].src || "/placeholder.svg"}
+                            alt={portfolioImages[3].alt}
                             fill
                             className="object-cover transition-all duration-1000 ease-out group-hover:scale-105"
                           />
@@ -393,12 +418,12 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   <div className="md:col-span-5 text-right">
                     <ScrollReveal delay={0.2}>
                       <p className="text-sm text-stone-400 tracking-[0.2em] uppercase mb-4">
-                        03 — {portfolioImages[2].category}
+                        03 — {portfolioImages[3].category}
                       </p>
                       <h3 className="text-3xl md:text-4xl lg:text-5xl font-thin text-black mb-6">
-                        {portfolioImages[2].title}
+                        {portfolioImages[3].title}
                       </h3>
-                      <p className="text-base text-stone-500 font-light leading-relaxed">{portfolioImages[2].description}</p>
+                      <p className="text-base text-stone-500 font-light leading-relaxed">{portfolioImages[3].description}</p>
                     </ScrollReveal>
                   </div>
                 </div>
@@ -432,33 +457,13 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   transition={{ duration: 0.5 }}
                   className="max-w-7xl mx-auto"
                 >
-                  {/* Category Filters */}
-                  <div className="flex flex-wrap justify-center gap-4 mb-16">
-                    {categories.map((category, index) => (
-                      <button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        className={`px-6 py-3 text-sm uppercase tracking-[0.2em] transition-all duration-300 ${
-                          selectedCategory === category
-                            ? "bg-black text-white"
-                            : "bg-white text-black border border-stone-300 hover:border-black"
-                        }`}
-                      >
-                        {category}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Portfolio Grid */}
+                  {/* Portfolio Grid - Tight spacing, no filters */}
                   <motion.div 
                     layout
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 mb-16"
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
                   >
                     <AnimatePresence>
-                      {(selectedCategory === "All"
-                        ? portfolioImages
-                        : portfolioImages.filter((img) => img.category === selectedCategory)
-                      ).map((item, index) => (
+                      {portfolioImages.map((item, index) => (
                         <motion.div
                           key={item.id}
                           layout
@@ -472,7 +477,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                           }}
                           className="group cursor-pointer"
                         >
-                        <div className="aspect-[3/4] overflow-hidden bg-stone-50 relative mb-4">
+                        <div className="aspect-[3/4] overflow-hidden bg-stone-50 relative">
                           {item.type === "video" ? (
                             <video
                               src={item.src}
@@ -481,24 +486,20 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                               loop
                               muted
                               playsInline
-                              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                              className="absolute inset-0 w-full h-full object-cover"
                             />
                           ) : (
                             <Image
                               src={item.src || "/placeholder.svg"}
                               alt={item.alt}
                               fill
-                              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                              className="object-cover"
                             />
                           )}
-                          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-500" />
                         </div>
-                        <div className="text-center">
-                          <p className="text-xs text-stone-400 tracking-[0.2em] uppercase mb-2">
-                            {String(index + 1).padStart(2, "0")} — {item.category}
-                          </p>
-                          <h3 className="text-xl font-thin text-black tracking-wide mb-2">{item.title}</h3>
-                          <p className="text-sm text-stone-500 leading-relaxed">{item.description}</p>
+                        {/* Caption below image - appears on hover */}
+                        <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <h3 className="text-sm font-thin text-stone-600 tracking-wide text-center">{item.title}</h3>
                         </div>
                       </motion.div>
                       ))}
@@ -543,7 +544,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.5, delay: 0.15 }}
                 id="about"
-              className="pt-20 md:pt-32 pb-0 bg-white relative overflow-hidden z-50"
+              className="pt-12 md:pt-20 pb-24 md:pb-32 bg-white relative overflow-hidden z-50"
               >
                 <div className="container mx-auto px-6 md:px-12 lg:px-24">
                 <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
@@ -560,31 +561,15 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   {/* Content */}
                   <div className="md:w-3/4">
                         <div className="prose prose-lg max-w-none">
-                      <p className="text-lg md:text-xl lg:text-2xl font-light leading-relaxed tracking-wide text-stone-800 uppercase">
-                            <span className="block mb-8">Mattie takes a bold approach to colour and expression.</span>
-                            <span className="block mb-8">After studying make up at London College of Fashion, Mattie was working with the likes of Nick Knight, Mark Lebon and Hugo Comte.</span>
-                            <span className="block">She continues to use make up as expression, experimenting with shapes and textures as well as showcasing excellent skin work.</span>
+                      <p className="text-xs md:text-sm font-light leading-relaxed tracking-wide text-stone-800 uppercase">
+                            <span className="block mb-4">Mattie takes a bold approach to colour and expression.</span>
+                            <span className="block mb-4">After studying make up at London College of Fashion in 2016, Mattie quickly became 1st assistant to leading London based Make Up Artist.</span>
+                            <span className="block">She continues to use make up as expression in her own work, experimenting with shapes and textures as well as showcasing excellent skin work. Mattie is currently working with brands such as 16Arlington, Studio Nicholson, Burberry, Loewe and more.</span>
                           </p>
                         </div>
                       </div>
                       </div>
                     </div>
-
-              {/* Clients Marquee - Closer now */}
-              <div className="mt-12 md:mt-16 relative w-full overflow-hidden border-t border-b border-stone-100 py-8">
-                <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white z-10 pointer-events-none" />
-                <div className="flex whitespace-nowrap animate-marquee">
-                  {[
-                    "BURBERRY", "LOEWE", "16ARLINGTON", "DIOR", "NET A PORTER", "COS", "H&M", "ZARA", "STUDIO NICHOLSON", "M&S",
-                    "THE FACE", "I-D", "ARENA HOMME +", "TWIN", "DOCUMENT", "VIOLET BOOK", "POP", "INTERVIEW GERMAN", "BRITISH VOGUE", "DIOR MAGAZINE",
-                    "BURBERRY", "LOEWE", "16ARLINGTON", "DIOR", "NET A PORTER", "COS", "H&M", "ZARA", "STUDIO NICHOLSON", "M&S"
-                  ].map((client, i) => (
-                    <span key={i} className="text-2xl md:text-4xl font-thin text-stone-600 mx-8 tracking-widest uppercase hover:text-black transition-colors duration-500 cursor-default">
-                      {client}
-                    </span>
-                  ))}
-                  </div>
-                </div>
               </motion.section>
             </>
           )}

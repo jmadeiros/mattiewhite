@@ -83,9 +83,8 @@ export function HorizontalScrollCarousel({ media }: HorizontalScrollCarouselProp
               {/* Image annotation on hover */}
               <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <p className="text-xs text-stone-400 tracking-[0.2em] uppercase">
-                  {String(index + 1).padStart(2, "0")} — {item.category || "Editorial"}
+                  {String(index + 1).padStart(2, "0")} — {item.title || item.alt}
                 </p>
-                <p className="text-sm text-stone-600 font-light mt-1">{item.title || item.alt}</p>
               </div>
             </div>
           ))}
