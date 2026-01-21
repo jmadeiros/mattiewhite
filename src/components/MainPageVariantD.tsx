@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { HorizontalScrollCarousel } from "@/components/animations/horizontal-scroll-carousel"
 import { portfolioImages } from "@/data/portfolio"
+import ExecutiveImpactCarousel from "@/components/ui/executive-impact-carousel"
 
 const HERO_IMAGES = [
   "/images/portfolio/cover-vogue.jpg",
@@ -108,11 +109,11 @@ const horizontalScrollMedia = [
   },
 ]
 
-interface MainPageProps {
+interface MainPageVariantDProps {
   navbarVariant?: "default" | "sticky" | "smart" | "minimal"
 }
 
-export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
+export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVariantDProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const heroRef = useRef<HTMLElement>(null)
 
@@ -614,9 +615,9 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 transition={{ duration: 0.5 }}
                 className="relative z-50 bg-white"
               >
-                <HorizontalScrollCarousel media={horizontalScrollMedia}>
+                <HorizontalScrollCarousel media={horizontalScrollMedia} scrollEndPercent="-79%">
                   {/* About Section as part of horizontal scroll */}
-                  <div className="relative w-[80vw] md:w-[40vw] shrink-0 flex flex-col justify-center px-8 md:px-16 h-[450px] md:h-[600px]">
+                  <div className="relative w-[70vw] md:w-[35vw] shrink-0 flex flex-col justify-center px-8 md:px-12 h-[450px] md:h-[600px]">
                     <div className="max-w-xl">
                       <h2 className="text-3xl md:text-4xl font-thin uppercase tracking-[0.2em] text-black mb-8">
                         About
@@ -637,6 +638,11 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                       </a>
                     </div>
                   </div>
+                  
+                  {/* Executive Impact Carousel - positioned to the right of About section */}
+                  <div className="relative w-[70vw] md:w-[55vw] shrink-0 flex items-center justify-center h-[450px] md:h-[600px] pl-4 md:pl-8">
+                    <ExecutiveImpactCarousel />
+                  </div>
                 </HorizontalScrollCarousel>
               </motion.div>
             </>
@@ -646,3 +652,4 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
     </div>
   )
 }
+

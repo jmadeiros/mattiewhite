@@ -17,6 +17,7 @@ type MediaProps = {
 type HorizontalScrollCarouselProps = {
   media: MediaProps[]
   children?: React.ReactNode
+  scrollEndPercent?: string // How far to scroll (default "-88%")
 }
 
 function VideoItem({ src, alt }: { src: string; alt: string }) {
@@ -47,13 +48,13 @@ function VideoItem({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export function HorizontalScrollCarousel({ media, children }: HorizontalScrollCarouselProps) {
+export function HorizontalScrollCarousel({ media, children, scrollEndPercent = "-88%" }: HorizontalScrollCarouselProps) {
   const targetRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
   })
 
-  const x = useTransform(scrollYProgress, [0, 1], ["1%", "-88%"])
+  const x = useTransform(scrollYProgress, [0, 1], ["1%", scrollEndPercent])
   const footerOpacity = useTransform(scrollYProgress, [0.85, 0.95], [0, 1])
   const footerY = useTransform(scrollYProgress, [0.85, 0.95], [20, 0])
 
@@ -116,16 +117,8 @@ export function HorizontalScrollCarousel({ media, children }: HorizontalScrollCa
               </a>
             </div>
 
-            {/* Right: Email Button & Socials */}
+            {/* Right: Socials */}
             <div className="flex items-center gap-6">
-              <a
-                href="mailto:mattie.white@icloud.com"
-                className="group relative border border-stone-400 text-stone-600 hover:text-white hover:border-black transition-all duration-500 px-8 py-3 text-[10px] uppercase tracking-[0.2em] bg-transparent overflow-hidden rounded-full"
-              >
-                <span className="relative z-10">Get in Touch</span>
-                <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full" />
-              </a>
-
               <Link href="https://www.instagram.com/mattiewhite_makeup/" target="_blank" aria-label="Instagram" className="text-stone-500 hover:text-black transition-colors">
                 <Instagram size={18} strokeWidth={1.5} />
               </Link>
