@@ -3,7 +3,8 @@
 import { useEffect, useState, useRef } from "react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Navbar } from "@/components/layout/navbar"
-import { Footer } from "@/components/layout/footer"
+import Link from "next/link"
+import { Instagram } from "lucide-react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
@@ -64,6 +65,13 @@ const horizontalScrollMedia = [
     type: "image" as "image" | "video",
   },
   {
+    src: "/images/carousel2/2025-10-06_Mattie-White-Day-3_MODEL0188_ret_noise 1 copy.jpg",
+    alt: "Beauty",
+    title: "Beauty",
+    category: "Beauty",
+    type: "image" as "image" | "video",
+  },
+  {
     src: "/images/carousel2/Selfridges .mp4",
     alt: "Selfridges",
     title: "Selfridges",
@@ -78,9 +86,9 @@ const horizontalScrollMedia = [
     type: "image" as "image" | "video",
   },
   {
-    src: "/images/portfolio/cos-editorial.jpg",
-    alt: "COS",
-    title: "COS",
+    src: "/images/carousel2/Studio Nicholson .jpg",
+    alt: "Studio Nicholson",
+    title: "Studio Nicholson",
     category: "Editorial",
     type: "image" as "image" | "video",
   },
@@ -89,6 +97,13 @@ const horizontalScrollMedia = [
     alt: "Zara",
     title: "Zara",
     category: "Commercial",
+    type: "image" as "image" | "video",
+  },
+  {
+    src: "/images/carousel2/191129_B_I_BEAUTY_05.jpg",
+    alt: "Beauty",
+    title: "Beauty",
+    category: "Beauty",
     type: "image" as "image" | "video",
   },
 ]
@@ -326,14 +341,14 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                             loop
                             muted
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover"
                           />
                         ) : (
                           <Image
                             src={portfolioImages[0].src || "/placeholder.svg"}
                             alt={portfolioImages[0].alt}
                             fill
-                            className="object-cover transition-all duration-1000 ease-out group-hover:scale-105"
+                            className="object-cover"
                           />
                         )}
                       </div>
@@ -375,14 +390,14 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                             loop
                             muted
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover scale-[1.15] transition-transform duration-500 ease-in-out group-hover:scale-[1.2]"
+                            className="absolute inset-0 w-full h-full object-cover scale-[1.15]"
                           />
                         ) : (
                           <Image
                             src={portfolioImages[1].src || "/placeholder.svg"}
                             alt={portfolioImages[1].alt}
                             fill
-                            className="object-cover transition-all duration-1000 ease-out group-hover:scale-105"
+                            className="object-cover"
                           />
                         )}
                       </div>
@@ -402,14 +417,14 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                             loop
                             muted
                             playsInline
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                            className="absolute inset-0 w-full h-full object-cover"
                           />
                         ) : (
                           <Image
                             src={portfolioImages[3].src || "/placeholder.svg"}
                             alt={portfolioImages[3].alt}
                             fill
-                            className="object-cover transition-all duration-1000 ease-out group-hover:scale-105"
+                            className="object-cover"
                           />
                         )}
                       </div>
@@ -442,7 +457,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                       className="group relative border border-black text-black hover:text-white transition-all duration-700 px-16 py-6 text-sm uppercase tracking-[0.25em] bg-transparent overflow-hidden hover:scale-105 hover:shadow-2xl hover:shadow-black/20 rounded-none"
                     >
                       <span className="relative z-10 flex items-center transition-transform duration-300">
-                        Explore All Projects
+                        Portfolio
                       </span>
                       <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                     </Button>
@@ -533,50 +548,31 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 initial={{ opacity: 1 }}
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.5 }}
-                      className="relative z-50 bg-white"
+                className="relative z-50 bg-white"
               >
-                <HorizontalScrollCarousel media={horizontalScrollMedia} />
-              </motion.div>
-              
-              <motion.section
-                key="about"
-                initial={{ opacity: 1 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                id="about"
-              className="pt-12 md:pt-20 pb-24 md:pb-32 bg-white relative overflow-hidden z-50"
-              >
-                <div className="container mx-auto px-6 md:px-12 lg:px-24">
-                <div className="flex flex-col md:flex-row gap-12 md:gap-24 items-start">
-                  {/* Sticky Title */}
-                  <div className="md:w-1/4">
-                    <div className="sticky top-32">
-                      <h2 className="text-3xl md:text-4xl font-thin uppercase tracking-[0.2em] text-black mb-6">
-                          About
-                        </h2>
-                      <div className="w-16 h-[1px] bg-black" />
+                <HorizontalScrollCarousel media={horizontalScrollMedia}>
+                  {/* About Section as part of horizontal scroll */}
+                  <div className="relative w-[80vw] md:w-[40vw] shrink-0 flex flex-col justify-center px-8 md:px-16 h-[450px] md:h-[600px]">
+                    <div className="max-w-xl">
+                      <h2 className="text-3xl md:text-4xl font-thin uppercase tracking-[0.2em] text-black mb-8">
+                        About
+                      </h2>
+                      <div className="w-16 h-[1px] bg-black mb-8" />
+                      <p className="text-xs md:text-sm font-light leading-relaxed tracking-wide text-stone-800 uppercase mb-12">
+                        <span className="block mb-4">Mattie takes a bold approach to colour and expression.</span>
+                        <span className="block mb-4">After studying make up at London College of Fashion in 2016, Mattie quickly became 1st assistant to leading London based Make Up Artist.</span>
+                        <span className="block">She continues to use make up as expression in her own work, experimenting with shapes and textures as well as showcasing excellent skin work. Mattie is currently working with brands such as 16Arlington, Studio Nicholson, Burberry, Loewe and more.</span>
+                      </p>
+                      
+                      {/* Footer Content removed from here - now in HorizontalScrollCarousel overlay */}
                     </div>
                   </div>
-                        
-                  {/* Content */}
-                  <div className="md:w-3/4">
-                        <div className="prose prose-lg max-w-none">
-                      <p className="text-xs md:text-sm font-light leading-relaxed tracking-wide text-stone-800 uppercase">
-                            <span className="block mb-4">Mattie takes a bold approach to colour and expression.</span>
-                            <span className="block mb-4">After studying make up at London College of Fashion in 2016, Mattie quickly became 1st assistant to leading London based Make Up Artist.</span>
-                            <span className="block">She continues to use make up as expression in her own work, experimenting with shapes and textures as well as showcasing excellent skin work. Mattie is currently working with brands such as 16Arlington, Studio Nicholson, Burberry, Loewe and more.</span>
-                          </p>
-                        </div>
-                      </div>
-                      </div>
-                    </div>
-              </motion.section>
+                </HorizontalScrollCarousel>
+              </motion.div>
             </>
           )}
         </AnimatePresence>
       </main>
-
-      <Footer />
     </div>
   )
 }
