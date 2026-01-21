@@ -18,6 +18,7 @@ type HorizontalScrollCarouselProps = {
   media: MediaProps[]
   children?: React.ReactNode
   scrollEndPercent?: string // How far to scroll (default "-88%")
+  onAtEnd?: (isAtEnd: boolean) => void // Callback when scroll reaches end
 }
 
 function VideoItem({ src, alt }: { src: string; alt: string }) {
@@ -48,7 +49,7 @@ function VideoItem({ src, alt }: { src: string; alt: string }) {
   )
 }
 
-export function HorizontalScrollCarousel({ media, children, scrollEndPercent = "-88%" }: HorizontalScrollCarouselProps) {
+export function HorizontalScrollCarousel({ media, children, scrollEndPercent = "-88%", onAtEnd }: HorizontalScrollCarouselProps) {
   const targetRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -57,6 +58,17 @@ export function HorizontalScrollCarousel({ media, children, scrollEndPercent = "
   const x = useTransform(scrollYProgress, [0, 1], ["1%", scrollEndPercent])
   const footerOpacity = useTransform(scrollYProgress, [0.85, 0.95], [0, 1])
   const footerY = useTransform(scrollYProgress, [0.85, 0.95], [20, 0])
+
+  // Track when scroll is at end (progress > 0.95)
+  useEffect(() => {
+    if (!onAtEnd) return
+    
+    const unsubscribe = scrollYProgress.on("change", (value) => {
+      onAtEnd(value > 0.95)
+    })
+    
+    return () => unsubscribe()
+  }, [scrollYProgress, onAtEnd])
 
   return (
     <section ref={targetRef} className="relative h-[400vh] bg-white">

@@ -147,6 +147,7 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
   const [hasScrolled, setHasScrolled] = useState(false)
   const [titleStyle, setTitleStyle] = useState(0) // 0: original, 1: combined medium, 2: combined large, 3: lowercase
   const [titlePosition, setTitlePosition] = useState(0) // 0: current position, 1: close to image
+  const [isAtScrollEnd, setIsAtScrollEnd] = useState(false) // Track when horizontal scroll is at end
   
   const titleStyleNames = ["A", "B", "C", "D"]
   const positionNames = ["Far", "Close"]
@@ -615,7 +616,7 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
                 transition={{ duration: 0.5 }}
                 className="relative z-50 bg-white"
               >
-                <HorizontalScrollCarousel media={horizontalScrollMedia} scrollEndPercent="-79%">
+                <HorizontalScrollCarousel media={horizontalScrollMedia} scrollEndPercent="-79%" onAtEnd={setIsAtScrollEnd}>
                   {/* About Section as part of horizontal scroll */}
                   <div className="relative w-[70vw] md:w-[35vw] shrink-0 flex flex-col justify-center px-8 md:px-12 h-[450px] md:h-[600px]">
                     <div className="max-w-xl">
@@ -641,7 +642,7 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
                   
                   {/* Executive Impact Carousel - positioned to the right of About section */}
                   <div className="relative w-[70vw] md:w-[55vw] shrink-0 flex items-center justify-center h-[450px] md:h-[600px] pl-4 md:pl-8">
-                    <ExecutiveImpactCarousel />
+                    <ExecutiveImpactCarousel isAtScrollEnd={isAtScrollEnd} />
                   </div>
                 </HorizontalScrollCarousel>
               </motion.div>

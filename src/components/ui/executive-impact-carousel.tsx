@@ -36,7 +36,11 @@ const COL_1_LOOP = [...COL_1_IMAGES, ...COL_1_IMAGES, ...COL_1_IMAGES, ...COL_1_
 const COL_2_LOOP = [...COL_2_IMAGES, ...COL_2_IMAGES, ...COL_2_IMAGES, ...COL_2_IMAGES];
 const COL_3_LOOP = [...COL_3_IMAGES, ...COL_3_IMAGES, ...COL_3_IMAGES, ...COL_3_IMAGES];
 
-export default function ExecutiveImpactCarousel() {
+type ExecutiveImpactCarouselProps = {
+  isAtScrollEnd?: boolean; // When true, carousel responds to wheel events globally
+}
+
+export default function ExecutiveImpactCarousel({ isAtScrollEnd = false }: ExecutiveImpactCarouselProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
   const col1Ref = useRef<HTMLDivElement>(null);
@@ -47,6 +51,9 @@ export default function ExecutiveImpactCarousel() {
   const scrollY = useRef({ col1: 0, col2: 0, col3: 0 });
   // Track content heights for wrapping
   const contentHeights = useRef({ col1: 0, col2: 0, col3: 0 });
+  
+  // Active when hovered OR when at scroll end
+  const isActive = isHovered || isAtScrollEnd;
 
   // Calculate content heights on mount
   useEffect(() => {
@@ -86,7 +93,7 @@ export default function ExecutiveImpactCarousel() {
   };
 
   const handleWheel = useCallback((e: WheelEvent) => {
-    if (!isHovered) return;
+    if (!isActive) return;
     
     const delta = e.deltaY * 0.8; // Sensitivity
     
@@ -100,7 +107,7 @@ export default function ExecutiveImpactCarousel() {
       return;
     }
     
-    // Block horizontal scroll
+    // Block horizontal scroll when active
     e.preventDefault();
     e.stopPropagation();
     
@@ -142,18 +149,24 @@ export default function ExecutiveImpactCarousel() {
         overwrite: true,
       });
     }
-  }, [isHovered]);
+  }, [isActive]);
 
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
 
+    // When at scroll end, listen on window for wheel events anywhere
+    // Otherwise, only listen on the container (when hovered)
+    if (isAtScrollEnd) {
+      window.addEventListener('wheel', handleWheel, { passive: false });
+    }
     container.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => {
+      window.removeEventListener('wheel', handleWheel);
       container.removeEventListener('wheel', handleWheel);
     };
-  }, [handleWheel]);
+  }, [handleWheel, isAtScrollEnd]);
 
   return (
     <div
