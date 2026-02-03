@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/animations/scroll-reveal"
 import { HorizontalScrollCarousel } from "@/components/animations/horizontal-scroll-carousel"
 import { portfolioImages } from "@/data/portfolio"
+import ExecutiveImpactCarousel from "@/components/ui/executive-impact-carousel"
 
 const HERO_IMAGES = [
   "/images/portfolio/cover-vogue.jpg",
@@ -144,6 +145,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
   const [showFullPortfolio, setShowFullPortfolio] = useState(false)
   const [showInitialArrow, setShowInitialArrow] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
+  const [isAtScrollEnd, setIsAtScrollEnd] = useState(false) // Track when horizontal scroll is at end
   // Fixed: Style B (combined medium) + Close position
   const titlePosition = 1 // 1 = close to image
   
@@ -342,7 +344,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
                     <ScrollReveal>
-                      <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
+                      <div className="aspect-[5/6] overflow-hidden bg-stone-50 relative">
                         {portfolioImages[0].type === "video" ? (
                           <video
                             src={portfolioImages[0].src}
@@ -406,7 +408,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
                     <ScrollReveal>
-                      <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
+                      <div className="aspect-[5/6] overflow-hidden bg-stone-50 relative">
                         {portfolioImages[3].type === "video" ? (
                           <video
                             src={portfolioImages[3].src}
@@ -542,9 +544,9 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 transition={{ duration: 0.5 }}
                 className="relative z-50 bg-white"
               >
-                <HorizontalScrollCarousel media={horizontalScrollMedia}>
+                <HorizontalScrollCarousel media={horizontalScrollMedia} scrollEndPercent="-79%" onAtEnd={setIsAtScrollEnd}>
                   {/* About Section as part of horizontal scroll */}
-                  <div className="relative w-[80vw] md:w-[40vw] shrink-0 flex flex-col justify-center px-8 md:px-16 h-[450px] md:h-[600px]">
+                  <div className="relative w-[70vw] md:w-[35vw] shrink-0 flex flex-col justify-center px-8 md:px-12 h-[450px] md:h-[600px]">
                     <div className="max-w-xl">
                       <h2 className="text-3xl md:text-4xl font-thin uppercase tracking-[0.2em] text-black mb-8">
                         About
@@ -555,7 +557,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                         <span className="block mb-4">After studying make up at London College of Fashion in 2016, Mattie quickly became 1st assistant to leading London based Make Up Artist.</span>
                         <span className="block">She continues to use make up as expression in her own work, experimenting with shapes and textures as well as showcasing excellent skin work. Mattie is currently working with brands such as 16Arlington, Studio Nicholson, Burberry, Loewe and more.</span>
                       </p>
-                      
+
                       <a
                         href="mailto:mattie.white@icloud.com"
                         className="group relative inline-block border border-stone-400 text-stone-600 hover:text-white hover:border-black transition-all duration-500 px-8 py-3 text-[10px] uppercase tracking-[0.2em] bg-transparent overflow-hidden rounded-full"
@@ -564,6 +566,11 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                         <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full" />
                       </a>
                     </div>
+                  </div>
+
+                  {/* Executive Impact Carousel - positioned to the right of About section */}
+                  <div className="relative w-[70vw] md:w-[55vw] shrink-0 flex items-center justify-center h-[450px] md:h-[600px] pl-4 md:pl-8">
+                    <ExecutiveImpactCarousel isAtScrollEnd={isAtScrollEnd} />
                   </div>
                 </HorizontalScrollCarousel>
               </motion.div>

@@ -345,7 +345,7 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
                     <ScrollReveal>
-                      <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
+                      <div className="aspect-[5/6] overflow-hidden bg-stone-50 relative">
                         {portfolioImages[0].type === "video" ? (
                           <video
                             src={portfolioImages[0].src}
@@ -409,7 +409,7 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
                     <ScrollReveal>
-                      <div className="aspect-[4/5] overflow-hidden bg-stone-50 relative">
+                      <div className="aspect-[5/6] overflow-hidden bg-stone-50 relative">
                         {portfolioImages[3].type === "video" ? (
                           <video
                             src={portfolioImages[3].src}
@@ -582,4 +582,3 @@ export default function MainPageVariantD({ navbarVariant = "smart" }: MainPageVa
     </div>
   )
 }
-
