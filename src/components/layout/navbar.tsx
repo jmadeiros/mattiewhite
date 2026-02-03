@@ -4,9 +4,7 @@ import Link from "next/link"
 import { useState, useEffect, useRef } from "react"
 import { Instagram } from "lucide-react"
 
-const navLinks = [
-  { href: "#about", label: "About" },
-]
+// About is handled separately as a scroll action
 
 interface NavbarProps {
   onPortfolioClick?: () => void
@@ -96,15 +94,20 @@ export function Navbar({ onPortfolioClick, variant = "default" }: NavbarProps = 
           >
             Portfolio
           </button>
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-xs text-stone-500 hover:text-stone-800 transition-colors font-light tracking-wide"
-            >
-              {link.label}
-            </Link>
-          ))}
+          <button
+            onClick={() => {
+              // Scroll to the end of horizontal carousel where About is
+              const carousel = document.querySelector('section.relative.h-\\[400vh\\]')
+              if (carousel) {
+                const rect = carousel.getBoundingClientRect()
+                const scrollTarget = window.scrollY + rect.top + rect.height - window.innerHeight
+                window.scrollTo({ top: scrollTarget, behavior: 'smooth' })
+              }
+            }}
+            className="text-xs text-stone-500 hover:text-stone-800 transition-colors font-light tracking-wide"
+          >
+            About
+          </button>
           <a
             href="mailto:mattie.white@icloud.com"
             className="text-xs text-stone-500 hover:text-stone-800 transition-colors font-light tracking-wide"
@@ -159,16 +162,22 @@ export function Navbar({ onPortfolioClick, variant = "default" }: NavbarProps = 
             >
               Portfolio
             </button>
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="text-lg text-stone-600 hover:text-stone-900 font-light"
-                onClick={() => setIsOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            <button
+              onClick={() => {
+                setIsOpen(false)
+                setTimeout(() => {
+                  const carousel = document.querySelector('section.relative.h-\\[400vh\\]')
+                  if (carousel) {
+                    const rect = carousel.getBoundingClientRect()
+                    const scrollTarget = window.scrollY + rect.top + rect.height - window.innerHeight
+                    window.scrollTo({ top: scrollTarget, behavior: 'smooth' })
+                  }
+                }, 100)
+              }}
+              className="text-lg text-stone-600 hover:text-stone-900 font-light"
+            >
+              About
+            </button>
             <a
               href="mailto:mattie.white@icloud.com"
               className="text-lg text-stone-600 hover:text-stone-900 font-light"
