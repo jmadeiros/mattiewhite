@@ -144,52 +144,15 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
   const [showFullPortfolio, setShowFullPortfolio] = useState(false)
   const [showInitialArrow, setShowInitialArrow] = useState(false)
   const [hasScrolled, setHasScrolled] = useState(false)
-  const [titleStyle, setTitleStyle] = useState(0) // 0: original, 1: combined medium, 2: combined large, 3: lowercase
-  const [titlePosition, setTitlePosition] = useState(0) // 0: current position, 1: close to image
+  // Fixed: Style B (combined medium) + Close position
+  const titlePosition = 1 // 1 = close to image
   
-  const titleStyleNames = ["A", "B", "C", "D"]
-  const positionNames = ["Far", "Close"]
-  
-  const renderTitle = (num: string, title: string, align: "left" | "right") => {
-    const textCase = titleStyle === 3 ? "" : "uppercase"
-    const displayTitle = titleStyle === 3 ? title : title
-    
-    if (titleStyle === 0) {
-      return (
-        <>
-          <p className={`text-sm text-stone-400 tracking-[0.2em] ${textCase} mb-4`}>
-            {num}
-          </p>
-          <h3 className={`text-3xl md:text-4xl lg:text-5xl font-thin text-black ${textCase}`}>
-            {displayTitle}
-          </h3>
-        </>
-      )
-    } else if (titleStyle === 1) {
-      return (
-        <p className={`text-base md:text-lg text-stone-400 tracking-[0.2em] ${textCase}`}>
-          {num} — {displayTitle}
-        </p>
-      )
-    } else if (titleStyle === 2) {
-      return (
-        <p className={`text-xl md:text-2xl text-stone-400 tracking-[0.2em] ${textCase}`}>
-          {num} — {displayTitle}
-        </p>
-      )
-    } else {
-      // Lowercase style
-      return (
-        <>
-          <p className="text-sm text-stone-400 tracking-[0.2em] mb-4">
-            {num}
-          </p>
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-thin text-black">
-            {title}
-          </h3>
-        </>
-      )
-    }
+  const renderTitle = (num: string, title: string) => {
+    return (
+      <p className="text-base md:text-lg text-stone-400 tracking-[0.2em] uppercase">
+        {num} — {title}
+      </p>
+    )
   }
 
   // Fast image cycling (180ms)
@@ -375,41 +338,6 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   transition={{ duration: 0.5 }}
                   className="max-w-7xl mx-auto space-y-24 md:space-y-40 relative"
                 >
-                {/* Style & Position filters - positioned at top right of first item */}
-                <div className="absolute -right-4 md:-right-16 top-0 z-40 flex flex-col gap-2">
-                  {/* Style filter */}
-                  <div className="flex flex-col items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-sm border border-stone-200">
-                    {titleStyleNames.map((name, index) => (
-                      <button
-                        key={name}
-                        onClick={() => setTitleStyle(index)}
-                        className={`text-[10px] w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
-                          titleStyle === index
-                            ? "bg-stone-800 text-white"
-                            : "text-stone-400 hover:text-stone-600 hover:bg-stone-100"
-                        }`}
-                      >
-                        {name}
-                      </button>
-                    ))}
-                  </div>
-                  {/* Position filter */}
-                  <div className="flex flex-col items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full p-1 shadow-sm border border-stone-200">
-                    {positionNames.map((name, index) => (
-                      <button
-                        key={name}
-                        onClick={() => setTitlePosition(index)}
-                        className={`text-[9px] w-8 h-8 rounded-full transition-all duration-200 flex items-center justify-center ${
-                          titlePosition === index
-                            ? "bg-stone-800 text-white"
-                            : "text-stone-400 hover:text-stone-600 hover:bg-stone-100"
-                        }`}
-                      >
-                        {name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
                 {/* Portfolio Item 1 */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className="md:col-span-7 group cursor-pointer">
@@ -438,7 +366,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   </div>
                   <div className={`md:col-span-5 ${titlePosition === 0 ? "text-right" : "text-left"}`}>
                     <ScrollReveal delay={0.2}>
-                      {renderTitle("01", portfolioImages[0].title, "right")}
+                      {renderTitle("01", portfolioImages[0].title)}
                     </ScrollReveal>
                   </div>
                 </div>
@@ -446,7 +374,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
                   <div className={`md:col-span-5 md:order-2 ${titlePosition === 0 ? "text-left" : "text-right"}`}>
                     <ScrollReveal delay={0.2}>
-                      {renderTitle("02", portfolioImages[1].title, "left")}
+                      {renderTitle("02", portfolioImages[1].title)}
                     </ScrollReveal>
                   </div>
                   <div className="md:col-span-7 md:order-1 group cursor-pointer">
@@ -502,7 +430,7 @@ export default function MainPage({ navbarVariant = "smart" }: MainPageProps) {
                   </div>
                   <div className={`md:col-span-5 ${titlePosition === 0 ? "text-right" : "text-left"}`}>
                     <ScrollReveal delay={0.2}>
-                      {renderTitle("03", portfolioImages[3].title, "right")}
+                      {renderTitle("03", portfolioImages[3].title)}
                     </ScrollReveal>
                   </div>
                 </div>
